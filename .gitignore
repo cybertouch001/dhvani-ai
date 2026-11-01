@@ -1,0 +1,12 @@
+private/
+data/
+logs/
+kit/
+*.jks
+signing.properties
+local.properties
+.gradle/
+build/
+site/_dl/
+test/shots/
+*.mp3

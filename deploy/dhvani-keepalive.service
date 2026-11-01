@@ -1,0 +1,11 @@
+[Unit]
+Description=Dhvani AI: keep backend + tunnel up and the site pointed at it
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=user
+ExecStart=/home/user/work/dhvani/start.sh
+KillMode=process
+TimeoutStartSec=300

@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'bot.tab.sites.dhvani'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'bot.tab.sites.dhvani'
+        minSdk 24
+        targetSdk 35
+        versionCode 2
+        versionName '1.0.1'
+        // The app opens this address; the site forwards /api to whichever server is current.
+        buildConfigField 'String', 'APP_URL', '"https://dhvani.sites.tab.bot/"'
+    }
+    // Release signing: properties file OUTSIDE this source tree (env DHVANI_SIGNING_PROPS, default ../../kit/signing.properties)
+    // with storeFile, storePassword, keyAlias, keyPassword. Every update must be signed with this same key.
+    def ksFile = file(System.getenv('DHVANI_SIGNING_PROPS') ?: rootProject.file('../../kit/signing.properties').path)
+    signingConfigs {
+        release {
+            if (ksFile.exists()) {
+                def p = new Properties(); ksFile.withInputStream { p.load(it) }
+                storeFile file(p['storeFile']); storePassword p['storePassword']; keyAlias p['keyAlias']; keyPassword p['keyPassword']
+            }
+        }
+    }
+    buildFeatures { buildConfig true }
+    buildTypes {
+        release {
+            if (ksFile.exists()) signingConfig signingConfigs.release
+            minifyEnabled false
+        }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+
+dependencies {
+    implementation 'androidx.core:core:1.15.0'
+}

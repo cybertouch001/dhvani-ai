@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Dhvani keepalive at boot and every 2 minutes
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=2min
+AccuracySec=15s
+Persistent=false
+
+[Install]
+WantedBy=timers.target
